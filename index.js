@@ -1,24 +1,27 @@
 //New task constructor function
 function New_Task(title){
-this[title]=title;
-this[isCompleted]=false;
+this.title=title;
+this.isCompleted=false;
 }
 
 
+
   //Variables
-const tasksArr=[];
+var tasksArr=[];
 const tasksDiv=document.querySelector("#tasks");
 const addButton=document.querySelector("#add-btn");
 
 
+
+
     //ADD BUTTON
     addButton.addEventListener("click",function(){
+
     let insertedTask=document.querySelector("#add").value;
-    let newTask=new New_Task(insertedTask,false);
-    if(Array.isArray(addTask(tasksArr,newTask))){
+    let newTask=new New_Task(insertedTask);
         tasksArr=addTask(tasksArr,newTask);
         render();
-    }
+    
 })
 
   
@@ -46,6 +49,7 @@ function render(){
     while(tasksDiv.firstElementChild){
         tasksDiv.removeChild(tasksDiv.firstElementChild);
     }
+    
     /*Adding all the tasks from the array to the 
     DOM(according to the updated array)*/
     for(let i=0;i<tasksArr.length;i++){
@@ -62,7 +66,6 @@ function render(){
         Complete
         </button>`;
     }
-    childDiv
     tasksDiv.appendChild(childDiv);
 }
 
