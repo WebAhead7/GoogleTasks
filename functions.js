@@ -25,7 +25,7 @@ function deleteTask(array, index) {
 function completeTask(array, index) {
     if (typeof index !== 'string' && index % 1 === 0) {
         if (index < array.length && index >= 0) {
-            array[index].isCompleted = true;
+            array[index].isCompleted = !array[index].isCompleted;
         } else {
             return "index not found";
         }
