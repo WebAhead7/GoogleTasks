@@ -22,7 +22,8 @@ test("test delete task",(obj)=>{
     var arr = [];
 
   arr =  deleteTask(arr ,1 );
-  obj.equal(arr.length,0);
+  console.log(arr);
+  obj.equal(arr,'index not found');
     
 });
 
