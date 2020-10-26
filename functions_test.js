@@ -22,7 +22,8 @@ test("test delete task",(obj)=>{
     var arr = [];
 
   arr =  deleteTask(arr ,1 );
-  obj.equal(arr.length,0);
+  console.log(arr);
+  obj.equal(arr,'index not found');
     
 });
 
@@ -60,7 +61,10 @@ test("test complete task",(obj)=>{
     var arr = [{title:'hello',isCompleted:false}];
 
   arr =  completeTask(arr ,0 );
-  obj.equal(arr[0],{title:'hello',isCompleted:true});
+  obj.equal(arr.length,1);
+  obj.equal(arr[0].title,'hello');
+  obj.equal(arr[0].isCompleted,true);
+
     
 });
 
