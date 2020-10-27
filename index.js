@@ -1,159 +1,157 @@
 //New task constructor function
-function New_Task(title){
-this.title=title;
-this.isCompleted=false;
+function New_Task(title) {
+    this.title = title;
+    this.isCompleted = false;
 }
 
 
+//Variables
+var tasksArr = [];
+const tasksDiv = document.querySelector("#tasks");
+const addButton = document.querySelector("#add-btn");
+const insertField = document.querySelector("#add");
+const colorsArr = ["#48b1bf", "#f7bb97", "#a8e063", "#d6ae7b", "#19547b", "#dd2476"];
 
 
-
-  //Variables
-var tasksArr=[];
-const tasksDiv=document.querySelector("#tasks");
-const addButton=document.querySelector("#add-btn");
-const insertField=document.querySelector("#add");
-const colorsArr=["#48b1bf","#f7bb97","#a8e063","#d6ae7b","#19547b","#dd2476"];
-
-
-
-    //SAVE TO LOCAL STORAGE
-    function saveToLocalStorage(arr){
-        if(localStorage.getItem("arr")){
-            localStorage.removeItem("arr");
-            localStorage.setItem("arr",JSON.stringify(arr));
-        }
-        else{
-            localStorage.setItem("arr",JSON.stringify(arr));
-        }
+//SAVE TO LOCAL STORAGE
+function saveToLocalStorage(arr) {
+    if (localStorage.getItem("arr")) {
+        localStorage.removeItem("arr");
+        localStorage.setItem("arr", JSON.stringify(arr));
     }
-
-    //LOAD FROM LOCAL STORAGE
-    function loadFromLocalStorage(){
-        let storageArr=localStorage.getItem("arr");
-        return JSON.parse(storageArr);
+    else {
+        localStorage.setItem("arr", JSON.stringify(arr));
     }
+}
 
 
-    //ADD BUTTON
-    addButton.addEventListener("click",function(){
-        if(insertField.value!==""){
-    let insertedTask=document.querySelector("#add").value;
-    let newTask=new New_Task(insertedTask);
-        tasksArr=addTask(tasksArr,newTask);
+//LOAD FROM LOCAL STORAGE
+function loadFromLocalStorage() {
+    let storageArr = localStorage.getItem("arr");
+    return JSON.parse(storageArr);
+}
+
+
+//ADD BUTTON
+addButton.addEventListener("click", function () {
+    if (insertField.value !== "") {
+        let insertedTask = document.querySelector("#add").value;
+        let newTask = new New_Task(insertedTask);
+        tasksArr = addTask(tasksArr, newTask);
         saveToLocalStorage(tasksArr);
         insertField.focus();
         render();
-        }
-        else
+    }
+    else
         alert("Please type a task to add");
-    
+
 })
 
-  
-    //Complete function
-    function completeFunc(e){
-            let tempArr=completeTask(tasksArr,Number(e.target.getAttribute("index")));
-            if(Array.isArray(tempArr)){
-                tasksArr=tempArr;
-                saveToLocalStorage(tasksArr);
-                render();
-            }
-            else{
-                console.error(tempArr);
-                alert("Something went Wrong! try again later");
-            }
+
+//Complete function
+function completeFunc(e) {
+    let tempArr = completeTask(tasksArr, Number(e.target.getAttribute("index")));
+    if (Array.isArray(tempArr)) {
+        tasksArr = tempArr;
+        saveToLocalStorage(tasksArr);
+        render();
     }
-
-
-    //Delete function
-    function deleteFunc(e){
-        let tempArr=deleteTask(tasksArr,Number(e.target.getAttribute("index")));
-        if(Array.isArray(tempArr)){
-            tasksArr=tempArr;
-            saveToLocalStorage(tasksArr);
-            render();
-        }
-        else{
-            console.error(tempArr);
-            alert("Something went Wrong! try again later");
+    else {
+        console.error(tempArr);
+        alert("Something went Wrong! try again later");
+    }
 }
+
+
+//Delete function
+function deleteFunc(e) {
+    let tempArr = deleteTask(tasksArr, Number(e.target.getAttribute("index")));
+    if (Array.isArray(tempArr)) {
+        tasksArr = tempArr;
+        saveToLocalStorage(tasksArr);
+        render();
     }
+    else {
+        console.error(tempArr);
+        alert("Something went Wrong! try again later");
+    }
+}
 
 
 //render() function
-function render(){
-    tasksArr=loadFromLocalStorage();
+function render() {
     //Clearing all the tasks from the DOM.
-    while(tasksDiv.firstElementChild){
+    while (tasksDiv.firstElementChild) {
         tasksDiv.removeChild(tasksDiv.firstElementChild);
     }
-    
+
     /*Adding all the tasks from the array to the 
     DOM(according to the updated array)*/
-    for(let i=0;i<tasksArr.length;i++){
-        var childDiv=document.createElement("div");
-        if(!tasksArr[i].hasOwnProperty("bgColor")){
-            tasksArr[i]["bgColor"]=randomColor();
+    for (let i = 0; i < tasksArr.length; i++) {
+        var childDiv = document.createElement("div");
+        if (!tasksArr[i].hasOwnProperty("bgColor")) {
+            tasksArr[i]["bgColor"] = randomColor();
         }
-        childDiv.style.backgroundColor=tasksArr[i].bgColor;
+
+        childDiv.style.backgroundColor = tasksArr[i].bgColor;
         //adding the title
-        let title=document.createElement("h1");
-        title.id="task-title";
-        title.innerHTML=tasksArr[i].title;
+        let title = document.createElement("h1");
+        title.id = "task-title";
+        title.innerHTML = tasksArr[i].title;
         childDiv.appendChild(title);
         //Creating the buttons (add and complete IMAGES)
-        let buttonsDiv=document.createElement("div");
+        let buttonsDiv = document.createElement("div");
         buttonsDiv.classList.add("buttons-div");
-        //adding the add button
-        let deleteButton=document.createElement("img");
-        deleteButton.setAttribute(`index`,`${i}`);
-        deleteButton.id="delete-btn"
-        deleteButton.src="./images/delete.png";
+        //adding the delete button
+        let deleteButton = document.createElement("img");
+        deleteButton.setAttribute(`index`, `${i}`);
+        deleteButton.src = "./images/delete.png";
         //adding the complete button
-        // completeButton.classList.toggle("complete-check");
-        let completeButton=document.createElement("img");
-        var completeClass="complete-uncheck";
-        if(tasksArr[i].isCompleted){
-            completeClass="complete-check";
+        let completeButton = document.createElement("img");
+        var completeClass = "complete-uncheck";
+        if (tasksArr[i].isCompleted) {
+            completeClass = "complete-check";
         }
         completeButton.classList.add(completeClass);
-        completeButton.setAttribute(`index`,`${i}`);
-        completeButton.addEventListener("click",e=>{
+        completeButton.setAttribute(`index`, `${i}`);
+        completeButton.addEventListener("click", e => {
             completeFunc(e);
         })
-        deleteButton.addEventListener("click",e=>{
+        deleteButton.addEventListener("click", e => {
             deleteFunc(e);
         })
         buttonsDiv.appendChild(deleteButton);
         buttonsDiv.appendChild(completeButton);
         childDiv.appendChild(buttonsDiv);
         tasksDiv.appendChild(childDiv);
-        insertField.value="";
+        saveToLocalStorage(tasksArr);
+        insertField.value = "";
     }
 }
 
 
+//random color function
 let lastColorINdex;
-function randomColor(){
-    let randomNum=Math.floor(Math.random()*colorsArr.length);
-    if(randomNum!==lastColorINdex){
-        let randomColor=colorsArr[randomNum];
-        lastColorINdex=randomNum;
+function randomColor() {
+    console.log("IN");
+    let randomNum = Math.floor(Math.random() * colorsArr.length);
+    if (randomNum !== lastColorINdex) {
+        let randomColor = colorsArr[randomNum];
+        lastColorINdex = randomNum;
         return randomColor;
     }
-    else{
+    else {
         return randomColor();
     }
-    
 }
 
 
-    window.addEventListener("load",()=>{
-        if(localStorage.getItem("arr")){
-            render();
-        }
-    })
+window.addEventListener("load", () => {
+    if (localStorage.getItem("arr")) {
+        tasksArr=loadFromLocalStorage();
+        render();
+    }
+})
 
 
 
