@@ -9,7 +9,7 @@
   <img src="./images/logo.png" width="400" height="250"/>
 </p>
 <p align="center">
-  <h3 align="center">Best game EVER</h3>
+  
   <p align="center">
     <a href="https://webahead7.github.io/GoogleTasks/"><strong>Check our website »</strong></a>
   </p>
