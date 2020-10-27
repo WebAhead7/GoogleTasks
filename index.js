@@ -11,6 +11,7 @@ var tasksArr=[];
 const tasksDiv=document.querySelector("#tasks");
 const addButton=document.querySelector("#add-btn");
 const insertField=document.querySelector("#add");
+const colorsArr=["#48b1bf","#f7bb97","#a8e063","#d6ae7b","#19547b","#dd2476"];
 
 
 
@@ -31,17 +32,30 @@ const insertField=document.querySelector("#add");
   
     //Complete function
     function completeFunc(e){
-            tasksArr=completeTask(tasksArr,Number(e.target.classList[0]));
-            render();
+            let tempArr=completeTask(tasksArr,Number(e.target.getAttribute("index")));
+            if(Array.isArray(tempArr)){
+                tasksArr=tempArr;
+                render();
+            }
+            else{
+                console.error(tempArr);
+                alert("Something went Wrong! try again later");
+            }
     }
 
 
     //Delete function
     function deleteFunc(e){
-            tasksArr=deleteTask(tasksArr,Number(e.target.classList[0]));
+        let tempArr=deleteTask(tasksArr,Number(e.target.getAttribute("index")));
+        if(Array.isArray(tempArr)){
+            tasksArr=tempArr;
             render();
-    
+        }
+        else{
+            console.error(tempArr);
+            alert("Something went Wrong! try again later");
 }
+    }
 
 
 //render() function
@@ -55,28 +69,63 @@ function render(){
     DOM(according to the updated array)*/
     for(let i=0;i<tasksArr.length;i++){
         var childDiv=document.createElement("div");
+        if(!tasksArr[i].hasOwnProperty("bgColor")){
+            tasksArr[i]["bgColor"]=randomColor();
+        }
+        childDiv.style.backgroundColor=tasksArr[i].bgColor;
         //adding the title
-        if(tasksArr[i].isCompleted){
-        childDiv.innerHTML+=`<h1 style="text-decoration:line-through">
-        ${tasksArr[i].title}
-        </h1>`;}
-        else{
-            childDiv.innerHTML+=`<h1>
-        ${tasksArr[i].title}
-        </h1>`}
-        
+        let title=document.createElement("h1");
+        title.id="task-title";
+        title.innerHTML=tasksArr[i].title;
+        childDiv.appendChild(title);
+        //Creating the buttons (add and complete IMAGES)
+        let buttonsDiv=document.createElement("div");
+        buttonsDiv.classList.add("buttons-div");
         //adding the add button
-        childDiv.innerHTML+=`<button onclick="deleteFunc(event)" class="${i}">
-        Delete
-        </button>`;
-        childDiv.innerHTML+=`<button onclick="completeFunc(event)" class="${i}">
-        Complete
-        </button>`;
+        let deleteButton=document.createElement("img");
+        deleteButton.setAttribute(`index`,`${i}`);
+        deleteButton.id="delete-btn"
+        deleteButton.src="./images/delete.png";
+        //adding the complete button
+        // completeButton.classList.toggle("complete-check");
+        let completeButton=document.createElement("img");
+        var completeClass="complete-uncheck";
+        if(tasksArr[i].isCompleted){
+            completeClass="complete-check";
+        }
+        completeButton.classList.add(completeClass);
+        completeButton.setAttribute(`index`,`${i}`);
+        completeButton.addEventListener("click",e=>{
+            completeFunc(e);
+        })
+        deleteButton.addEventListener("click",e=>{
+            deleteFunc(e);
+        })
+        buttonsDiv.appendChild(deleteButton);
+        buttonsDiv.appendChild(completeButton);
+        childDiv.appendChild(buttonsDiv);
         tasksDiv.appendChild(childDiv);
         insertField.value="";
     }
-
 }
+
+
+let lastColorINdex;
+function randomColor(){
+    let randomNum=Math.floor(Math.random()*colorsArr.length);
+    if(randomNum!==lastColorINdex){
+        let randomColor=colorsArr[randomNum];
+        lastColorINdex=randomNum;
+        return randomColor;
+    }
+    else{
+        return randomColor();
+    }
+    
+}
+
+
+
 
 
 
