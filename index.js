@@ -6,6 +6,8 @@ this.isCompleted=false;
 
 
 
+
+
   //Variables
 var tasksArr=[];
 const tasksDiv=document.querySelector("#tasks");
@@ -15,12 +17,31 @@ const colorsArr=["#48b1bf","#f7bb97","#a8e063","#d6ae7b","#19547b","#dd2476"];
 
 
 
+    //SAVE TO LOCAL STORAGE
+    function saveToLocalStorage(arr){
+        if(localStorage.getItem("arr")){
+            localStorage.removeItem("arr");
+            localStorage.setItem("arr",JSON.stringify(arr));
+        }
+        else{
+            localStorage.setItem("arr",JSON.stringify(arr));
+        }
+    }
+
+    //LOAD FROM LOCAL STORAGE
+    function loadFromLocalStorage(){
+        let storageArr=localStorage.getItem("arr");
+        return JSON.parse(storageArr);
+    }
+
+
     //ADD BUTTON
     addButton.addEventListener("click",function(){
         if(insertField.value!==""){
     let insertedTask=document.querySelector("#add").value;
     let newTask=new New_Task(insertedTask);
         tasksArr=addTask(tasksArr,newTask);
+        saveToLocalStorage(tasksArr);
         insertField.focus();
         render();
         }
@@ -35,6 +56,7 @@ const colorsArr=["#48b1bf","#f7bb97","#a8e063","#d6ae7b","#19547b","#dd2476"];
             let tempArr=completeTask(tasksArr,Number(e.target.getAttribute("index")));
             if(Array.isArray(tempArr)){
                 tasksArr=tempArr;
+                saveToLocalStorage(tasksArr);
                 render();
             }
             else{
@@ -49,6 +71,7 @@ const colorsArr=["#48b1bf","#f7bb97","#a8e063","#d6ae7b","#19547b","#dd2476"];
         let tempArr=deleteTask(tasksArr,Number(e.target.getAttribute("index")));
         if(Array.isArray(tempArr)){
             tasksArr=tempArr;
+            saveToLocalStorage(tasksArr);
             render();
         }
         else{
@@ -60,6 +83,7 @@ const colorsArr=["#48b1bf","#f7bb97","#a8e063","#d6ae7b","#19547b","#dd2476"];
 
 //render() function
 function render(){
+    tasksArr=loadFromLocalStorage();
     //Clearing all the tasks from the DOM.
     while(tasksDiv.firstElementChild){
         tasksDiv.removeChild(tasksDiv.firstElementChild);
@@ -123,6 +147,19 @@ function randomColor(){
     }
     
 }
+
+
+    window.addEventListener("load",()=>{
+        if(localStorage.getItem("arr")){
+            render();
+        }
+    })
+
+
+
+
+
+
 
 
 
