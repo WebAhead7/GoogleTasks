@@ -109,7 +109,7 @@ function render(){
         let deleteButton=document.createElement("img");
         deleteButton.setAttribute(`index`,`${i}`);
         deleteButton.id="delete-btn"
-        deleteButton.src="../images/delete.png";
+        deleteButton.src="./images/delete.png";
         //adding the complete button
         // completeButton.classList.toggle("complete-check");
         let completeButton=document.createElement("img");
