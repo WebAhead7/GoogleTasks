@@ -6,7 +6,7 @@
 <br />
 
 <p align="center">
-  <img src="./images/logo.png" width="250" height="250"/>
+  <img src="./images/logo.png" width="400" height="250"/>
 </p>
 <p align="center">
   <h3 align="center">Best game EVER</h3>
@@ -30,7 +30,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 <p align="center">
-  <img src="./images.screen" width="600" height="286" />
+  <img src="./images/screen.png" width="600" height="286" />
 </p>
 
 Google Tasks 
