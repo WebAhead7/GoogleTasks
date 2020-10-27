@@ -123,11 +123,11 @@ body{
 
 
 .complete-check{
-    content:url("./images/complete.png");
+    content:url("../images/complete.png");
 }
 
 .complete-uncheck{
-    content:url("./images/uncomplete.png");
+    content:url("../images/uncomplete.png");
 
 }
 
