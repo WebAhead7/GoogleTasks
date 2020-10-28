@@ -133,7 +133,6 @@ function render() {
 //random color function
 let lastColorINdex;
 function randomColor() {
-    console.log("IN");
     let randomNum = Math.floor(Math.random() * colorsArr.length);
     if (randomNum !== lastColorINdex) {
         let randomColor = colorsArr[randomNum];
