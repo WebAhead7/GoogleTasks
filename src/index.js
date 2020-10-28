@@ -169,7 +169,7 @@ window.addEventListener("load", () => {
         render();
     }
 
-    startTest();
+    // startTest();
 })
 
 
