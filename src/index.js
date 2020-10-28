@@ -83,15 +83,6 @@ completeAll.addEventListener("click",()=>{
     render();
     })
 
-     //SHOW ALL
-let showAll=document.querySelector("#showAll");
-showAll.addEventListener("click",()=>{
-    if (localStorage.getItem("arr")) {
-        tasksArr=loadFromLocalStorage();
-        render();
-    }
-    })
-
 
    
 
