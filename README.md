@@ -52,7 +52,7 @@ the data is saved locally in your device
 <!-- GETTING STARTED -->
 ## Getting Started
 
-Check out the project instructions from WebAhead: [Projet instructions](https://github.com/WebAhead/master-reference/tree/master/coursebook/week-4/project.md)
+Check out the project instructions from WebAhead: [Projet instructions](https://github.com/WebAhead/master-reference/tree/master/coursebook/week-4/project)
 
 
 <!-- ROADMAP -->
