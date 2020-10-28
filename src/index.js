@@ -37,10 +37,7 @@ addButton.addEventListener("click", function () {
     if (insertField.value !== "") {
         let insertedTask = document.querySelector("#add").value;
         let newTask = new New_Task(insertedTask);
-        tasksArr = addTask(tasksArr, newTask);
-        saveToLocalStorage(tasksArr);
-        insertField.focus();
-        render();
+       addNewTask(newTask);
     }
     else
         alert("Please type a task to add");
@@ -48,9 +45,24 @@ addButton.addEventListener("click", function () {
 })
 
 
+function addNewTask(task){
+    tasksArr = addTask(tasksArr, task);
+    saveToLocalStorage(tasksArr);
+    insertField.focus();
+    render();
+}
+
+
 //Complete function
 function completeFunc(e) {
-    let tempArr = completeTask(tasksArr, Number(e.target.getAttribute("index")));
+
+    completeFuncByIndex(Number(e.target.getAttribute("index")));
+   
+}
+
+function completeFuncByIndex(index){
+    let tempArr = completeTask(tasksArr, index);
+
     if (Array.isArray(tempArr)) {
         tasksArr = tempArr;
         saveToLocalStorage(tasksArr);
@@ -65,7 +77,13 @@ function completeFunc(e) {
 
 //Delete function
 function deleteFunc(e) {
-    let tempArr = deleteTask(tasksArr, Number(e.target.getAttribute("index")));
+
+    deleteFuncByIndex(Number(e.target.getAttribute("index")))
+   
+}
+
+function deleteFuncByIndex(index){
+    let tempArr = deleteTask(tasksArr, index);
     if (Array.isArray(tempArr)) {
         tasksArr = tempArr;
         saveToLocalStorage(tasksArr);
@@ -150,6 +168,8 @@ window.addEventListener("load", () => {
         tasksArr=loadFromLocalStorage();
         render();
     }
+
+    startTest();
 })
 
 
