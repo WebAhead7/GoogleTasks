@@ -35,13 +35,15 @@ function loadFromLocalStorage() {
 //ADD BUTTON
 //(click)
 addButton.addEventListener("click", function () {
-    if (insertField.value !== "") {
+    if (insertField.value !== "" && !insertField.value.includes("<")) {
         let insertedTask = document.querySelector("#add").value;
         let newTask = new New_Task(insertedTask);
        addNewTask(newTask);
     }
-    else
-        alert("Please type a task to add");
+    else{
+        alert("Invalid Input!");
+        insertField.value="";
+    }
 
 })
 
@@ -57,6 +59,41 @@ insertField.addEventListener("keydown",(e)=>{
             alert("Please type a task to add");
     }
 })
+
+
+//Other options (buttons)
+
+//CLEAR ALL
+let clearAll=document.querySelector("#clearAll");
+clearAll.addEventListener("click",()=>{
+    tasksArr=[];
+    saveToLocalStorage(tasksArr);
+    insertField.focus();
+    render();
+    })
+
+
+    //COMPLETE ALL
+let completeAll=document.querySelector("#completeAll");
+completeAll.addEventListener("click",()=>{
+    for(let i=0;i<tasksArr.length;i++){
+        tasksArr[i].isCompleted=true;
+    }
+    saveToLocalStorage(tasksArr);
+    render();
+    })
+
+     //SHOW ALL
+let showAll=document.querySelector("#showAll");
+showAll.addEventListener("click",()=>{
+    if (localStorage.getItem("arr")) {
+        tasksArr=loadFromLocalStorage();
+        render();
+    }
+    })
+
+
+   
 
 
 
