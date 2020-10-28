@@ -33,6 +33,7 @@ function loadFromLocalStorage() {
 
 
 //ADD BUTTON
+//(click)
 addButton.addEventListener("click", function () {
     if (insertField.value !== "") {
         let insertedTask = document.querySelector("#add").value;
@@ -43,6 +44,20 @@ addButton.addEventListener("click", function () {
         alert("Please type a task to add");
 
 })
+
+//(enter key)
+insertField.addEventListener("keydown",(e)=>{
+    if(e.keyCode===13){
+        if (insertField.value !== "") {
+            let insertedTask = document.querySelector("#add").value;
+            let newTask = new New_Task(insertedTask);
+           addNewTask(newTask);
+        }
+        else
+            alert("Please type a task to add");
+    }
+})
+
 
 
 function addNewTask(task){
@@ -57,7 +72,7 @@ function addNewTask(task){
 function completeFunc(e) {
 
     completeFuncByIndex(Number(e.target.getAttribute("index")));
-   
+
 }
 
 function completeFuncByIndex(index){
@@ -129,6 +144,8 @@ function render() {
         var completeClass = "complete-uncheck";
         if (tasksArr[i].isCompleted) {
             completeClass = "complete-check";
+            title.style.textDecoration="line-through";
+            title.style.textDecorationColor="black";
         }
         completeButton.classList.add(completeClass);
         completeButton.setAttribute(`index`, `${i}`);
